@@ -37,7 +37,7 @@ In this container, there are two components **_1. Memory component_** **_2. Code
 
 **_2. Code component_** : is a place in the container where `code is executed one line at a time`. This code component also has a fancy name, namely `'Thread of Execution'`.
 
-<div align="center"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--thFap99C--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5sitpkprw51dgdjg7um5.png" width="700" height="400"/></div>
+<div align="center"><img src="assets/execution-context.png" width="700" height="400"/></div>
 
 Here are the three types of execution contexts in JavaScript:
 
@@ -86,7 +86,7 @@ var x = average(10, 20);
 
 When the above code is executed, the call stack will look something like this:
 
-<div align="center"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--pJ1tXzik--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/gbpl2i0goqnms4hduiz9.gif" width="500" height="250"/></div>
+<div align="center"><img src="assets/callstack.gif" width="500" height="250"/></div>
 
 Here's what happens in each step:
 
@@ -99,7 +99,7 @@ Here's what happens in each step:
 
 It's worth noting that if the call stack becomes too large, it can cause a _stack overflow error_, which occurs when there are too many nested function calls and the call stack runs out of memory.
 
-<div align="center"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--XVz5YATF--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/osp5hnawrdbb4uiu1jsg.gif" width="500" height="250"/></div>
+<div align="center"><img src="assets/stack-overFlow.gif" width="500" height="250"/></div>
 
 <hr />
 
