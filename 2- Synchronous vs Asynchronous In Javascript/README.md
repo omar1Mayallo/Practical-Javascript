@@ -10,7 +10,7 @@ when JavaScript executes a _long-running synchronous code_ the problem here is t
 So, How Javascript solve this problem ?
 
 JavaScript solves the problem of blocking the main thread by using **_Asynchronous Programming_**.<br/>
-I will discuss this topic in the [Asynchronous Javascript](Asynchronous_Javascript).<br/>
+I will discuss this topic in the [Asynchronous Javascript](https://github.com/omar1Mayallo/Practical-Javascript/tree/main/3-%20Asynchronous%20Javascript).<br/>
 Asynchronous programming allows the main thread to continue executing `(non-blocking)` while an asynchronous operation is in progress. This means that the _user interface can remain responsive and the application can feel faster_.
 
 <div align="center"><img src="assets/synchronous-vs-asynchronous.jpg" width="500" height="350"/></div>
