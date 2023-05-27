@@ -213,7 +213,7 @@ By chaining the Promises using .`then()`, we first perform the login process. If
 
 <div align="center">_____________________________________</div>
 
-### How Promises solve the drawbacks of Callbacks
+### How Promises solve the problems and drawbacks of Callbacks
 
 let's see the same example in Callbacks but with Promises :
 
@@ -284,6 +284,53 @@ This example showcases how Promises provide a cleaner and more maintainable appr
 <hr/>
 
 ## Async & Await (The Newest Way ES2017)
+
+### What Is Async & Await
+
+Async/Await is a syntax introduced in ECMAScript 2017 that provides a more concise and **_synchronous-like_** way to handle asynchronous operations in JavaScript using Promises. It's built on top of Promises and allows you to write asynchronous code in a more synchronous and linear fashion, making it easier to understand and maintain.
+
+Here's how async/await works:
+
+```js
+async function fetchData() {
+  try {
+    const response = await fetch("https://api.example.com/data");
+    const data = await response.json();
+    // Handle the retrieved data
+    return data;
+  } catch (error) {
+    // Handle any errors that occurred during the data retrieval
+    throw error;
+  }
+}
+```
+
+1. `async` Function: To use `await`, you need to define an `async` function. The `async` keyword before a function declaration or expression indicates that the function will always return a Promise.
+2. `await` Keyword: Inside an `async` function, you can use the `await` keyword before an expression that returns a Promise. The `await` keyword pauses the execution of the function until the Promise is resolved or rejected, and then it returns the resolved value.
+3. Error Handling: You can use [`try-catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) blocks to handle errors that occur during the execution of the asynchronous operations. If a Promise is rejected within an await expression, an exception is thrown, which can be caught using `try-catch`.
+
+Async/await simplifies the handling of asynchronous code, eliminates the need for explicit Promise chaining, and improves code readability by resembling synchronous code flow. It allows developers to write asynchronous code that looks and behaves more _like synchronous code_, making it easier to understand and maintain.
+
+<div align="center">_____________________________________</div>
+
+### How Async/await solve the problems and drawbacks of Promises
+
+Read these awesome blogs to see how _Async/Await_ solve the problems and drawbacks of _Promises_
+
+- [3 Reasons Why Async/Await Is Better Than Chaining Promises](https://maximorlov.com/async-await-better-than-chaining-promises/#reason-2-reusing-values-inside-promise-chains)
+- [5 Reasons Why JavaScript Async/Await Over Promises](https://dev.to/deadwin19/5-reasons-why-javascript-async-await-over-promises-1if3)
+
+<div align="center">_____________________________________</div>
+
+### Pros & Cons Of Async/await
+
+- PROS
+  - **_Synchronous-like Coding Style_** ⇒ improve readability, reusability and maintainability of the asynchronous code.
+  - **_Access Intermediate Values_** ⇒ Accessing and utilizing intermediate values during asynchronous operations is more intuitive and can be done directly within the code flow.
+  - **_Error Handling_** ⇒ Error handling is simplified with the use of try-catch blocks, allowing for centralized and more straightforward error handling.
+- CONS
+  - **_Limited Parallelism_** ⇒ Async/await operations are executed sequentially by default, which means that parallel execution of multiple asynchronous operations requires additional techniques like `Promise.all()` or using libraries like [`p-queue`](https://www.npmjs.com/package/p-queue).
+  - **_Dependency on Promises_** ⇒ Async/await relies on Promises for asynchronous operations. If working with code or libraries that do not support Promises, async/await may not be suitable or require additional adaptations or wrapping.
 
 <hr/>
 
