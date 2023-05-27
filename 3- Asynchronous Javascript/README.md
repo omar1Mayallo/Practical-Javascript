@@ -123,6 +123,164 @@ In this scenario, error handling becomes complex, and the code structure becomes
 
 ## Promises (The Newer Way ES2015)
 
+### What Is Promises
+
+> The Promise object represents the eventual completion (or failure) of an _asynchronous operation_ and its resulting value. [MDN_Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+
+The Promise object has three states:
+
+1. **_Pending_**: The initial state. The Promise is neither fulfilled nor rejected.
+
+2. **_Fulfilled_**: The Promise has successfully completed the asynchronous operation, and the result (resolved value) is available.
+
+3. **_Rejected_**: The Promise has encountered an error or failure during the asynchronous operation, and the reason (rejected value) is available.
+
+Promises have two main methods:
+
+1. **_then()_**: This method is used to handle the fulfillment of a Promise. It takes two optional callback functions as arguments: `onFulfilled` and `onRejected`. The `onFulfilled` function is executed when the Promise is _fulfilled_, and the `onRejected` function is executed when the Promise is _rejected_.
+
+2. **_catch()_**: This method is used to handle the rejection of a Promise. It takes a single callback function as an argument: onRejected. This function is executed when the Promise is rejected.
+
+Promises have been a fundamental part of JavaScript since the ECMAScript 6 (ES6) specification and have become a widely used pattern for managing asynchronous operations in modern JavaScript applications.
+
+let's see this real-world example to know how promises work:
+
+```js
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://localhost/mydatabase");
+
+// Define user schema and model
+const userSchema = new mongoose.Schema({
+  username: String,
+  password: String,
+  name: String,
+  email: String,
+  role: String,
+});
+const User = mongoose.model("User", userSchema);
+
+function login(username, password) {
+  return new Promise((resolve, reject) => {
+    // Simulating an asynchronous login process using Mongoose
+    User.findOne({username, password}, (err, user) => {
+      if (err) {
+        reject(err);
+      } else if (user) {
+        resolve("Login successful");
+      } else {
+        reject("Invalid username or password");
+      }
+    });
+  });
+}
+
+function getUserDetails(username) {
+  return new Promise((resolve, reject) => {
+    // Simulating an asynchronous API call to fetch user details using Mongoose
+    User.findOne({username}, (err, user) => {
+      if (err) {
+        reject(err);
+      } else if (user) {
+        resolve(user);
+      } else {
+        reject("User not found");
+      }
+    });
+  });
+}
+
+login("admin", "password")
+  .then((loginStatus) => {
+    console.log(loginStatus);
+    return getUserDetails("admin");
+  })
+  .then((user) => {
+    console.log("User details:", user);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+```
+
+In this example, we assume you have a MongoDB database running locally, and we use Mongoose to define a user schema and model.
+
+The `login` function performs an asynchronous login process using Mongoose's `findOne` method. It queries the database to find a user with the provided username and password. If a user is found, it resolves with _'Login successful'_, and if not, it rejects with an appropriate error message.
+
+The `getUserDetails` function also uses Mongoose's `findOne` method to fetch user details based on the username. If a user is found, it resolves with the user object, and if not, it rejects with an appropriate error message.
+
+By chaining the Promises using .`then()`, we first perform the login process. If the login is successful, the login status is logged to the console, and then we proceed to fetch the user details using the `getUserDetails` function. The resolved user details are then logged to the console.
+
+<div align="center">_____________________________________</div>
+
+### How Promises solve the drawbacks of Callbacks
+
+let's see the same example in Callbacks but with Promises :
+
+```js
+function fetchData() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const data = "Data fetched successfully!";
+      resolve(data);
+    }, 2000);
+  });
+}
+
+function processData(data) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const processedData = data.toUpperCase();
+      resolve(processedData);
+    }, 2000);
+  });
+}
+
+function saveData(data) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const savedData = "Data saved successfully!";
+      resolve(savedData);
+    }, 2000);
+  });
+}
+
+fetchData()
+  .then((fetchedData) => processData(fetchedData))
+  .then((processedData) => saveData(processedData))
+  .then((savedData) => {
+    console.log("Data saved:", savedData);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+```
+
+In this example, we have three functions: `fetchData`, `processData`, and `saveData`, which return Promises instead of using callbacks.
+
+Each function wraps its asynchronous operation inside a Promise. When the operation completes successfully, it calls `resolve` with the result. If an error occurs, it calls `reject` with an error object.
+
+By chaining the Promises together using `.then()`, we achieve a more linear and readable flow. Each `.then()` block represents a step in the asynchronous process and receives the resolved value from the previous Promise. If an error occurs at any step, it will be caught by the `.catch()` block.
+
+With Promises, the code is more organized, and the flow of the program is easier to understand compared to deeply nested callbacks. The code follows a natural progression from one asynchronous operation to the next, improving readability and maintainability.
+
+Additionally, error handling is centralized in the .catch() block, making it easier to handle and propagate errors consistently throughout the Promise chain.
+
+This example showcases how Promises provide a cleaner and more maintainable approach to handling asynchronous operations, resulting in code that is easier to read, reason about, and maintain.
+
+<div align="center">_____________________________________</div>
+
+### Pros & Cons Of Promises
+
+- PROS
+  - **_Avoiding Callback Hell_** ⇒ which mean improve readability, reusability and maintainability of the code.
+  - **_Error Handling_** ⇒ Promises have built-in error handling through the `.catch()` method, making it easier to handle and propagate errors in asynchronous code. Errors can be caught and handled at the end of the Promise chain.
+  - **_Composition_** ⇒ Promises can be composed together using methods like `Promise.all()`, `Promise.race()`, and `Promise.resolve()`, enabling the execution of multiple asynchronous operations in parallel or in a specific order. [here all Promises methods in MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+- CONS
+  - **_Backward Compatibility_** ⇒ Promises were introduced in ECMAScript 6 (ES6), so older browsers or environments that do not support ES6 may require additional polyfills or workarounds to use Promises effectively.
+  - **_[Promise Hell](https://medium.com/@pyrolistical/how-to-get-out-of-promise-hell-8c20e0ab0513)_** ⇒ also known as _promise chaining hell or the pyramid of doom_ with Promises, is a situation where code using Promises becomes overly nested and hard to read and maintain. It occurs when multiple asynchronous operations are chained together using `.then()` callbacks, resulting in deeply nested code that can be difficult to follow and understand.
+  - **_Access Intermediate Values_** ⇒ it become challenging compared to using other approaches like _async/await_. Promises primarily focus on the final resolved or rejected value and do not provide built-in mechanisms for accessing intermediate values during the Promise chain. If we need to access intermediate values we should use workarounds [this example show this](https://maximorlov.com/async-await-better-than-chaining-promises/#reason-2-reusing-values-inside-promise-chains).
+
 <hr/>
 
 ## Async & Await (The Newest Way ES2017)
@@ -131,6 +289,7 @@ In this scenario, error handling becomes complex, and the code structure becomes
 
 #### Resources
 
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 - [https://developer.okta.com/blog/2019/01/16/history-and-future-of-async-javascript](https://developer.okta.com/blog/2019/01/16/history-and-future-of-async-javascript)
 - [https://www.telerik.com/blogs/evolution-asynchronous-data-fetching-javascript](https://www.telerik.com/blogs/evolution-asynchronous-data-fetching-javascript)
 - [https://blog.logrocket.com/evolution-async-programming-javascript/](https://blog.logrocket.com/evolution-async-programming-javascript/)
