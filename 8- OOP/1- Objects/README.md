@@ -274,3 +274,62 @@ student.study(); // Output: Alice is studying
 <div align="center">___________</div><br/>
 
 **_Each approach to creating objects in JavaScript has its own strengths and weaknesses. The choice depends on the specific requirements of your application, the level of complexity_**
+
+## Accessing & Mutating Objects Members
+
+- **_Dot notation_**
+  Dot notation is generally preferred over bracket notation because it is more succinct and easier to read.
+  ```js
+  const person = {
+    name: {
+      first: "Bob",
+      last: "Smith",
+    },
+  };
+  person.name.first = "John";
+  console.log(person.name); // {first: "John", last: "Smith"}
+  console.log(person.name.first); // John
+  console.log(person.name.last); // Smith
+  ```
+
+<div align="center">________________________________</div><br/>
+
+- **_Bracket notation_**
+
+  For the above example we use it like this:
+
+  ```js
+  person["name"]["first"] = "John";
+  console.log(person["name"]); // {first: "John", last: "Smith"}
+  console.log(person["name"]["first"]); // John
+  ```
+
+  - But, Why it's exist while we can use dot notation?
+
+    - For example, if an object property name is held in a variable:
+
+    ```js
+    const person = {
+      name: ["Bob", "Smith"],
+      age: 32,
+    };
+
+    function logProperty(propertyName) {
+      // console.log(person.propertyName); // person object does not have propertyName
+      console.log(person[propertyName]);
+    }
+
+    logProperty("name");
+    // ["Bob", "Smith"]
+    logProperty("age");
+    // 32
+    ```
+
+    - For example, If property names contain spaces or symbols:
+
+    ```js
+    const person = {"first name": "John", "!@#$%^&": "Special"};
+
+    console.log(person["first name"]); // Output: John
+    console.log(person["!@#$%^&"]); // Output: Special
+    ```
