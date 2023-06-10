@@ -275,6 +275,8 @@ student.study(); // Output: Alice is studying
 
 **_Each approach to creating objects in JavaScript has its own strengths and weaknesses. The choice depends on the specific requirements of your application, the level of complexity_**
 
+<hr/>
+
 ## Accessing & Mutating Objects Members
 
 - **_Dot notation_**
@@ -304,32 +306,56 @@ student.study(); // Output: Alice is studying
   console.log(person["name"]["first"]); // John
   ```
 
-  - But, Why it's exist while we can use dot notation?
+  But, Why it exists while we can use dot notation?
 
-    - For example, if an object property name is held in a variable:
+  - For example, if an object property name is held in a variable:
 
-    ```js
-    const person = {
-      name: ["Bob", "Smith"],
-      age: 32,
-    };
+  ```js
+  const person = {
+    name: ["Bob", "Smith"],
+    age: 32,
+  };
 
-    function logProperty(propertyName) {
-      // console.log(person.propertyName); // person object does not have propertyName
-      console.log(person[propertyName]);
-    }
+  function logProperty(propertyName) {
+    // console.log(person.propertyName); // person object does not have propertyName
+    console.log(person[propertyName]);
+  }
 
-    logProperty("name");
-    // ["Bob", "Smith"]
-    logProperty("age");
-    // 32
-    ```
+  logProperty("name");
+  // ["Bob", "Smith"]
+  logProperty("age");
+  // 32
+  ```
 
-    - For example, If property names contain spaces or symbols:
+  - For example, If property names contain spaces or symbols:
 
-    ```js
-    const person = {"first name": "John", "!@#$%^&": "Special"};
+  ```js
+  const person = {"first name": "John", "!@#$%^&": "Special"};
 
-    console.log(person["first name"]); // Output: John
-    console.log(person["!@#$%^&"]); // Output: Special
-    ```
+  console.log(person["first name"]); // Output: John
+  console.log(person["!@#$%^&"]); // Output: Special
+  ```
+
+<hr/>
+
+## Constructor Property
+
+Every object has a constructor property refer to the parent object that created from it for example:
+
+- constructor of `"john"` is `String`
+- constructor of `5` is `Number`
+- constructor of `true` is `Boolean`
+
+```js
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  bio = function () {
+    console.log(`${this.name} is ${this.age} years old.`);
+  };
+}
+
+const person1 = new Person("John", 15);
+
+console.log(person1.constructor); // [Function: Person]
+```
