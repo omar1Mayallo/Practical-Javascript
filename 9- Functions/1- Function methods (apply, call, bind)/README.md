@@ -90,3 +90,9 @@ You can see the [MDN reference](https://developer.mozilla.org/en-US/docs/Web/Jav
 | `bind`  | Creates a new function with the same body as the original function but with a fixed context (the value of `this`)             | First argument: Context                                     | Returns a new function           |
 | `apply` | Invokes a function with a specified context and an array (or array-like object) of arguments as the arguments to the function | First argument: Context, Second argument: Array-like object | Invokes the function immediately |
 | `call`  | Invokes a function with a specified context and individual arguments as the arguments to the function                         | First argument: Context, Rest arguments                     | Invokes the function immediately |
+
+#### Resources
+
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
+- [https://blog.bitsrc.io/understanding-call-bind-and-apply-methods-in-javascript-33dbf3217be](https://blog.bitsrc.io/understanding-call-bind-and-apply-methods-in-javascript-33dbf3217be)
+- [https://medium.com/@omergoldberg/javascript-call-apply-and-bind-e5c27301f7bb](https://medium.com/@omergoldberg/javascript-call-apply-and-bind-e5c27301f7bb)
