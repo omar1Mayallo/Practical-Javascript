@@ -26,7 +26,7 @@ But, Why do we need Encapsulation? Let's see an awesome example of a deep unders
   <img src="imgs/cat-ex.png"/>
 </div>
 
-```js
+``` js
 class Cat {
   #mood = "happy"; // Private field (using # symbol)
   #hungry = true; // Private field (using # symbol)
