@@ -26,7 +26,7 @@ But, Why do we need Encapsulation? Let's see an awesome example of a deep unders
   <img src="imgs/cat-ex.png"/>
 </div>
 
-``` js
+```js
 class Cat {
   #mood = "happy"; // Private field (using # symbol)
   #hungry = true; // Private field (using # symbol)
@@ -147,7 +147,7 @@ Almost true, we can think of Abstraction as a natural extension of encapsulation
 
 **_So they are different concepts because `the goals of each of them are different`: Encapsulation ensures data privacy and controlled access, while Abstraction simplifies the interface and presents a clean and clear view of the object's behavior._**
 
-let's show examples to understand the Abstraction concept:
+let's show example to understand the Abstraction concept:
 
 When driving a car, we, as users, are only interested in performing actions like moving and braking. We don't need to know the intricate details of the engine's internal combustion process or how the oil brake system works.
 
@@ -192,9 +192,181 @@ myCar.brake(); // Output: Car is braking. Applying oil brake for braking.
 
 ### 3- Inheritance
 
+Inheritance is a fundamental concept in Object-Oriented Programming (OOP) that allows a class (subclass) to inherit properties and behaviors from another class (superclass). It is a way of creating a hierarchy of classes with shared characteristics and functionalities.
+
+<div align="center">
+  <img src="imgs/inher.png" width="700" height="330"/>
+</div>
+
+Let's show example to understand the Inheritance concept:
+
+```js
+// Base class (Superclass)
+class Animal {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  // Method in the superclass
+  makeSound() {
+    console.log("Some generic animal sound.");
+  }
+}
+
+// Subclass (extends Animal)
+class Dog extends Animal {
+  // Additional property specific to Dog class
+  constructor(name, age, breed) {
+    super(name, age);
+    this.breed = breed;
+  }
+
+  // Overriding the makeSound method with a specific implementation for Dog
+  makeSound() {
+    console.log("Woof! Woof!");
+  }
+
+  // Additional method specific to Dog class
+  fetch() {
+    console.log("Fetching the ball!");
+  }
+}
+
+// Creating instances of the classes
+const genericAnimal = new Animal("Generic Animal", 5);
+const myDog = new Dog("Buddy", 3, "Golden Retriever");
+
+// Using methods from the superclass and subclass
+genericAnimal.makeSound(); // Output: Some generic animal sound.
+myDog.makeSound(); // Output: Woof! Woof!
+myDog.fetch(); // Output: Fetching the ball!
+```
+
 <hr>
 
 ### 4- Polymorphism
+
+Polymorphism means **_“many shapes”_** in Greek. Polymorphism means one name and many forms. But, why it's important concept of OOP ?
+
+<div align="center">
+  <img src="imgs/poly.webp"/>
+</div>
+
+So we already know the power of inheritance and happily use it. But there comes this problem.
+
+Say we have a parent class and a few child classes which inherit from it. Sometimes we want to use a collection — for example a list — which contains a mix of all these classes. Or we have a method implemented for the parent class — but we’d like to use it for the children, too.
+
+This can be solved by using Polymorphism.
+
+Here are two examples that demonstrate the use of polymorphism:
+
+**Example 1: Shape Hierarchy**
+
+Let's consider a simple shape hierarchy with a base class `Shape` and two subclasses `Circle` and `Rectangle`. Each shape has a method to calculate its area. We want to have a collection of shapes and calculate the total area for all shapes in the collection, regardless of their specific type.
+
+```javascript
+class Shape {
+  calculateArea() {
+    return 0; // Base class implementation (to be overridden by subclasses)
+  }
+}
+
+class Circle extends Shape {
+  constructor(radius) {
+    super();
+    this.radius = radius;
+  }
+
+  calculateArea() {
+    return Math.PI * this.radius ** 2;
+  }
+}
+
+class Rectangle extends Shape {
+  constructor(width, height) {
+    super();
+    this.width = width;
+    this.height = height;
+  }
+
+  calculateArea() {
+    return this.width * this.height;
+  }
+}
+
+// Create an array of different shapes
+const shapes = [
+  new Circle(5),
+  new Rectangle(4, 6),
+  new Circle(3),
+  new Rectangle(5, 10),
+];
+
+// Calculate the total area for all shapes in the array
+let totalArea = 0;
+shapes.forEach((shape) => {
+  totalArea += shape.calculateArea();
+});
+
+console.log("Total area of all shapes:", totalArea);
+```
+
+In this example, we have a collection `shapes` that contains instances of both `Circle` and `Rectangle` classes. We can call the `calculateArea()` method for each shape in the collection without worrying about their specific types. Polymorphism allows us to treat all shapes as instances of the base class `Shape`, and the appropriate implementation of the `calculateArea()` method is called based on the actual type of each shape at runtime.
+
+**Example 2: Virtual Pet Game**
+
+Consider a virtual pet game with a base class `Pet` and two subclasses `Dog` and `Cat`. All pets have a common method `makeSound()`, but each pet type makes a different sound. We want to have a function that takes a pet as an argument and calls the `makeSound()` method, regardless of whether it's a `Dog`, a `Cat`, or any other future pet type.
+
+```javascript
+class Pet {
+  makeSound() {
+    console.log("Some generic pet sound.");
+  }
+}
+
+class Dog extends Pet {
+  makeSound() {
+    console.log("Woof! Woof!");
+  }
+}
+
+class Cat extends Pet {
+  makeSound() {
+    console.log("Meow!");
+  }
+}
+
+function playWithPet(pet) {
+  pet.makeSound(); // Calls the appropriate makeSound() method based on the pet type
+}
+
+const myDog = new Dog();
+const myCat = new Cat();
+
+playWithPet(myDog); // Output: Woof! Woof!
+playWithPet(myCat); // Output: Meow!
+```
+
+In this example, the function `playWithPet()` takes a `pet` object as an argument and calls the `makeSound()` method on that object. Regardless of whether `pet` is a `Dog` or a `Cat`, polymorphism allows us to invoke the appropriate `makeSound()` method based on the actual type of the `pet` object at runtime.
+
+<hr>
+
+## Summary
+
+**_OOP is a programming paradigm that focuses on organizing code into objects, each representing a distinct entity with its characteristics (properties) and behaviors (methods). These objects can interact with each other to perform tasks and represent complex systems._**
+
+**Advantages of using OOP**
+
+1. **Code Reusability**: OOP encourages the creation of reusable code by using inheritance and creating objects that can be used in different parts of the application.
+
+2. **Modularity**: Objects encapsulate data and behavior, providing a modular approach to programming. This modular design makes it easier to maintain and extend the codebase.
+
+3. **Easy to Understand**: OOP promotes abstraction, allowing developers to create models that closely resemble real-world entities. This makes the code more intuitive and easier to understand for other developers.
+
+4. **Organized and Maintainable Code**: By following the principles of OOP, the codebase can be structured in a logical and organized manner, making it easier to maintain and debug.
+
+5. **Security**: Encapsulation helps in securing data by controlling access to the object's properties. It limits direct manipulation and ensures data integrity.
 
 <hr>
 
